@@ -1,4 +1,5 @@
 import shutil
+import tempfile
 
 from django import forms
 from django.conf import settings
@@ -9,8 +10,10 @@ from django.urls import reverse
 
 from ..models import User, Group, Post, Comment, Follow
 
+TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
-@override_settings(MEDIA_ROOT=settings.TEMP_MEDIA_ROOT)
+
+@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PostPagesTests(TestCase):
 
     @classmethod
@@ -84,7 +87,7 @@ class PostPagesTests(TestCase):
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
-        shutil.rmtree(settings.TEMP_MEDIA_ROOT, ignore_errors=True)
+        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
@@ -297,6 +300,7 @@ class CacheTest(TestCase):
         )
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
+        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def test_cache_posts(self):
         """При удалении записи, она остается в кэше страницы

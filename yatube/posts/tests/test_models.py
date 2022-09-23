@@ -1,6 +1,3 @@
-import shutil
-
-from django.conf import settings
 from django.test import TestCase
 
 from ..models import Group, Post, User
@@ -21,11 +18,6 @@ class PostModelTest(TestCase):
             author=cls.user,
             text='Тестовый пост',
         )
-
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-        shutil.rmtree(settings.TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def test_models_have_correct_object_name(self):
         """Проверяет, что у модели Group корректно работает __str__."""

@@ -1,7 +1,5 @@
-import shutil
 from http import HTTPStatus
 
-from django.conf import settings
 from django.test import TestCase, Client
 
 from ..models import Group, Post, User
@@ -35,11 +33,6 @@ class PostURLTests(TestCase):
         cls.url_address_author = {
             '/posts/1/edit/': 'posts/create_post.html',
         }
-
-    @classmethod
-    def tearDownClass(cls):
-        super().tearDownClass()
-        shutil.rmtree(settings.TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def setUp(self):
         self.guest_client = Client()

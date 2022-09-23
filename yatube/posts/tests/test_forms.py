@@ -1,4 +1,5 @@
 import shutil
+import tempfile
 
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -7,8 +8,10 @@ from django.urls import reverse
 
 from ..models import User, Group, Post, Comment
 
+TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 
-@override_settings(MEDIA_ROOT=settings.TEMP_MEDIA_ROOT)
+
+@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
 class PostFormTests(TestCase):
 
     @classmethod
@@ -34,7 +37,7 @@ class PostFormTests(TestCase):
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
-        shutil.rmtree(settings.TEMP_MEDIA_ROOT, ignore_errors=True)
+        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
 
     def setUp(self):
         self.guest_client = Client()

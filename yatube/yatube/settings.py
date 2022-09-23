@@ -1,11 +1,10 @@
 import os
-import tempfile
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '#!6qv^ao7w6jtn(d2%g=l^0@70f)&obimpcz4_whjem_#p)=%$'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -110,8 +109,6 @@ CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=BASE_DIR)
 
 CACHES = {
     'default': {
