@@ -5,9 +5,17 @@ User = get_user_model()
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
-    description = models.TextField()
+    title = models.CharField(
+        verbose_name='Название группы',
+        max_length=200
+    )
+    slug = models.SlugField(
+        verbose_name='Уникальное имя',
+        unique=True
+    )
+    description = models.TextField(
+        verbose_name='Описание'
+    )
 
     class Meta:
         verbose_name = 'Группа'
@@ -62,29 +70,43 @@ class Comment(models.Model):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        verbose_name='Пост'
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='comments'
+        related_name='comments',
+        verbose_name='Автор комментария'
     )
     text = models.TextField(
-        'Текст',
+        verbose_name='Текст',
         help_text='Текст нового комментария'
     )
     created = models.DateTimeField(
+        verbose_name='Дата комментария',
         auto_now_add=True
     )
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
 
 
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='follower')
+        related_name='follower',
+        verbose_name='Пользователь'
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='following'
+        related_name='following',
+        verbose_name='Подписка на'
     )
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'

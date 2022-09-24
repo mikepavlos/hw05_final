@@ -47,15 +47,10 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    author = post.author
     form = CommentForm()
-    comments = post.comments.all()
     context = {
         'post': post,
-        'author': author,
         'form': form,
-        'comments': comments
-
     }
     return render(request, 'posts/post_detail.html', context)
 
@@ -70,14 +65,13 @@ def post_create(request):
         form.save()
         return redirect('posts:profile', form.author)
 
-    title = 'Добавить запись'
     context = {
         'form': form,
-        'title': title
     }
     return render(request, 'posts/create_post.html', context)
 
 
+@login_required()
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
 
@@ -94,11 +88,9 @@ def post_edit(request, post_id):
         return redirect('posts:post_detail', post_id)
 
     is_edit = True
-    title = 'Редактировать запись'
     context = {
         'form': form,
         'post': post,
-        'title': title,
         'is_edit': is_edit
     }
     return render(request, 'posts/create_post.html', context)
@@ -137,14 +129,7 @@ def profile_follow(request, username):
     if author == request.user:
         return redirect('posts:profile', username=username)
 
-    following = Follow.objects.filter(
-        user=request.user,
-        author=author
-    ).exists()
-    if following:
-        return redirect('posts:profile', username=username)
-
-    Follow.objects.create(user=request.user, author=author)
+    Follow.objects.get_or_create(user=request.user, author=author)
     return redirect('posts:follow_index')
 
 

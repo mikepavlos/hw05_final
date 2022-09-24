@@ -153,7 +153,7 @@ class PostPagesTests(TestCase):
             PostPagesTests.post.id
         )
         self.assertEqual(
-            response.context['author'],
+            response.context['post'].author,
             PostPagesTests.post.author
         )
         self.assertEqual(
@@ -165,7 +165,7 @@ class PostPagesTests(TestCase):
             PostPagesTests.post.image
         )
         self.assertEqual(
-            response.context['comments'][0],
+            response.context['post'].comments.all()[0],
             PostPagesTests.comment
         )
         self.assertIsInstance(form_comment, forms.fields.CharField)
@@ -180,8 +180,6 @@ class PostPagesTests(TestCase):
             with self.subTest(value=value):
                 form_field = response.context['form'].fields[value]
                 self.assertIsInstance(form_field, expected)
-
-        self.assertEqual(response.context['title'], 'Добавить запись')
 
     def test_create_post_with_group_correct_templates(self):
         """Пост группы при его создании отображается на страницах."""
@@ -234,7 +232,6 @@ class PostPagesTests(TestCase):
                 self.assertIsInstance(form_field, expected)
 
         self.assertEqual(response.context['post'].id, PostPagesTests.post.id)
-        self.assertEqual(response.context['title'], 'Редактировать запись')
         self.assertTrue(response.context['post'])
         self.assertTrue(response.context['is_edit'])
 

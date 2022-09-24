@@ -11,13 +11,14 @@ class PostURLTests(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.user = User.objects.create_user(username='test-user')
+        cls.author = User.objects.create_user(username='autor')
         Group.objects.create(
             title='Тестовая группа',
             slug='test-slug',
             description='Тестовое описание',
         )
         cls.post = Post.objects.create(
-            author=cls.user,
+            author=cls.author,
             text='Тестовый пост',
         )
         cls.url_address_public = {
@@ -66,28 +67,37 @@ class PostURLTests(TestCase):
         self.assertEqual(response_404.status_code, HTTPStatus.NOT_FOUND)
 
     def test_url_authorized_redirect_anonymous(self):
-        """Страницы для авторизованных перенаправляют
+        """Страницы для авторизованных пользователей перенаправляют
         анонимного пользователя на страницу логина.
         """
-        for address in PostURLTests.url_address_authorized.keys():
+        url_address_authorized = {
+            **PostURLTests.url_address_authorized,
+            **PostURLTests.url_address_author
+        }
+
+        for address in url_address_authorized.keys():
             with self.subTest(address=address):
                 response = self.guest_client.get(address)
                 self.assertRedirects(response, '/auth/login/?next=' + address)
 
     def test_url_author_redirect_anonymous(self):
-        """Страница /edit/ перенаправляет анонимного пользователя
-        на страницу просмотра поста.
+        """Страница /edit/ перенаправляет авторизованного пользователя -
+        не автора поста на страницу просмотра поста.
         """
-        response = self.guest_client.get('/posts/1/edit/')
+        response = self.authorized_client.get('/posts/1/edit/')
         self.assertRedirects(response, '/posts/1/')
 
     def test_urls_uses_correct_template(self):
         """Страницы использцют соответствующие шаблоны."""
-        url_address = {**PostURLTests.url_address_public,
-                       **PostURLTests.url_address_authorized,
-                       **PostURLTests.url_address_author}
+        url_address = {
+            **PostURLTests.url_address_public,
+            **PostURLTests.url_address_authorized,
+        }
 
         for address, template in url_address.items():
             with self.subTest(address=address):
                 response = self.authorized_client.get(address)
                 self.assertTemplateUsed(response, template)
+
+        response = self.author_client.get('/posts/1/edit/')
+        self.assertTemplateUsed(response, 'posts/create_post.html')

@@ -85,8 +85,8 @@ class PostFormTests(TestCase):
         self.assertTrue(
             Post.objects.filter(
                 text='Тестовый новый пост',
-                author=PostFormTests.user,
-                group=PostFormTests.group,
+                author=PostFormTests.post.author,
+                group=PostFormTests.post.group,
                 image='posts/small.gif'
             ).exists()
         )
@@ -102,13 +102,13 @@ class PostFormTests(TestCase):
             'image': self.uploaded_new
         }
         old_post = Post.objects.get(pk=PostFormTests.post.pk)
+        old_group = Group.objects.get(slug=PostFormTests.group.slug)
         response = self.authorized_client.post(
             reverse(
                 'posts:post_edit',
                 kwargs={'post_id': PostFormTests.post.pk}
             ),
-            data=form_data,
-            follow=True
+            data=form_data
         )
         new_post = Post.objects.get(pk=PostFormTests.post.pk)
         self.assertNotEqual(old_post.text, new_post.text)
@@ -134,8 +134,9 @@ class PostFormTests(TestCase):
                 text='Текст поста',
                 group=PostFormTests.group,
                 image='posts/small.gif'
-            )
+            ).exists()
         )
+        self.assertNotIn(old_post, old_group.group_posts.all())
 
     def test_anonymous_cant_create_post(self):
         """При попытке создания поста неавторизованным пользователем

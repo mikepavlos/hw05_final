@@ -18,14 +18,14 @@
           </li>
           {% endif %}
           <li class="list-group-item">
-            Автор: {{ author.get_full_name }} {{ author.username }}
+            Автор: {{ post.author.get_full_name }} {{ post.author.username }}
           </li>
           <li class="list-group-item d-flex justify-content-between
             align-items-center">
-            Всего постов автора: <span >{{ author.posts.count }}</span>
+            Всего постов автора: <span >{{ post.author.posts.count }}</span>
           </li>
           <li class="list-group-item">
-            <a href="{% url 'posts:profile' author %}">
+            <a href="{% url 'posts:profile' post.author %}">
               все посты пользователя
             </a>
           </li>
