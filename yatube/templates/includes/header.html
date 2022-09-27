@@ -1,6 +1,6 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg fixed-top navbar-light"
-     style="background-color: lightsteelblue">
+     style="background-color: lightskyblue">
   <div class="container">
     <a class="navbar-brand" href="{% url 'posts:index' %}">
       <img src="{% static 'img/logo.png' %}" width="30" height="30"
@@ -18,12 +18,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbar-menu">
-      <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         {% with request.resolver_match.view_name as active %}
           <li class="nav-item">
-            <a class="nav-link
+            <a class="nav-link text-dark
               {% if active  == 'about:author' %}
-                active
+                btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{% url 'about:author' %}"
             >
@@ -31,9 +31,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link
+            <a class="nav-link text-dark
               {% if active  == 'about:tech' %}
-                active
+                btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{% url 'about:tech' %}"
             >
@@ -42,9 +42,9 @@
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link
+            <a class="nav-link text-dark
               {% if active  == 'posts:post_create' %}
-                active
+                btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{% url 'posts:post_create' %}"
             >
@@ -52,9 +52,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-light
+            <a class="nav-link text-white
               {% if active  == 'users:password_change' %}
-                active
+                btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{% url 'users:password_change' %}"
             >
@@ -62,20 +62,27 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-light" href="{% url 'users:logout' %}">
+            <a class="nav-link text-white"
+               href="{% url 'users:logout' %}"
+            >
               Выйти
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'posts:profile' user.username %}">
-            Пользователь: {{ user.username }}
+            <a class="nav-link text-dark
+              {% if active  == 'posts:profile' %}
+                btn btn-primary px-2 me-2 text-white
+              {% endif %}"
+               href="{% url 'posts:profile' user.username %}"
+            >
+            Пользователь: <b>{{ user.username }}</b>
             </a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link link-light
+            <a class="nav-link text-dark
               {% if active  == 'users:login' %}
-                active
+                btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{% url 'users:login' %}"
             >
@@ -83,9 +90,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link link-light
+            <a class="nav-link text-dark
               {% if active  == 'users:signup' %}
-                active
+                btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{%  url 'users:signup' %}"
             >
@@ -98,3 +105,4 @@
     </div>
   </div>
 </nav>
+<br>
