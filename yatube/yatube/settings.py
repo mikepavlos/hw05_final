@@ -4,13 +4,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '#!6qv^ao7w6jtn(d2%g=l^0@70f)&obimpcz4_whjem_#p)=%$'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '[::1]',
     'testserver',
+    'www.Mihalis.pythonanywhere.com',
+    'Mihalis.pythonanywhere.com',
 ]
 
 INSTALLED_APPS = [
