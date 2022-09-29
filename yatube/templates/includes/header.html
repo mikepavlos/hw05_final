@@ -70,7 +70,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link text-dark
-              {% if active  == 'posts:profile' %}
+              {% if active == 'posts:profile' %}
                 btn btn-primary px-2 me-2 text-white
               {% endif %}"
                href="{% url 'posts:profile' user.username %}"
