@@ -3,7 +3,7 @@
 {% block content %}
   <div class="container py-5">
     <h1>{{ group.title }}</h1>
-    <h4>{{ group.description }}</h4>
+    <h5><em>{{ group.description }}</em></h5>
     {% for post in page_obj %}
       {% include 'includes/post_elements.html' with author_posts='True' groups='True' %}
     {% endfor %}
