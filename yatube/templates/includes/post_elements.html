@@ -1,32 +1,37 @@
 {% load thumbnail %}
-<article class="card-body">
-  <ul>
-    <li>
-      Автор: {{ post.author.get_full_name }}
-      {% if author_posts %}
-        <a href="{% url 'posts:profile' post.author %}">
-          все посты пользователя
-        </a>
-      {% endif %}
-    </li>
-    <li>
+<div class="card">
+  <div class="card-header">
+    Автор: {{ post.author.get_full_name }}
+    {% if author_posts %}
+      <a href="{% url 'posts:profile' post.author %}">
+        все посты пользователя
+      </a>
+    {% endif %}
+  </div>
+  <div class="card-body">
+    <h6 class="card-title text-secondary">
       Дата публикации: {{ post.pub_date|date:"d E Y" }}
-    </li>
-  </ul>
+    </h6>
     {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
-      <img class="card-img my-2" src="{{ im.url }}" alt="picture 960x339">
+      <img class="card-img top" src="{{ im.url }}" alt="picture 960x339">
     {% endthumbnail %}
-  <p>{{ post.text|linebreaks|truncatewords:50 }}</p>
-  <a href="{% url 'posts:post_detail' post.pk %}">
-    подробная информация
-  </a>
-  <p>
-    {% if post.group and not groups %}
+    <p class="card-text">
+      {{ post.text|linebreaks|truncatewords:50 }}
+    </p>
+    <a
+      class="btn btn-outline-primary"
+      href="{% url 'posts:post_detail' post.pk %}"
+    >
+      подробная информация
+    </a>
+  </div>
+  {% if post.group and not groups %}
+    <div class="card-footer bg-transparent">
       Группа
       <a href="{% url 'posts:group_list' post.group.slug %}">
         {{ post.group.title }}
       </a>
-    {% endif %}
-  </p>
-</article>
-{% if not forloop.last %}<hr>{% endif %}
+    </div>
+  {% endif %}
+</div>
+{% if not forloop.last %}<br>{% endif %}
