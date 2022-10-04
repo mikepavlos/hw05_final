@@ -1,7 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Custom 404{% endblock %}
 {% block content %}
-  <h1>Custom 404</h1>
-  <p>Страницы с адресом {{ path }} не существует</p>
-  <a href="{% url 'posts:index' %}">Идите на главную</a>
+{#  <h1>Custom 404</h1>#}
+{#  <p>Страницы с адресом {{ path }} не существует</p>#}
+{#  <a href="{% url 'posts:index' %}">Идите на главную</a>#}
+  <div class="container py-5">
+  <div class="card mb-3 text-center" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          class="img-thumbnail"
+          src="{% static 'pict/DSC_1999.JPG' %}"
+          width="250" height="377"
+          alt="..."
+        >
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+        <h3 class="card-title">Увы!</h3>
+        <p class="card-text">Страницы с адресом {{ path }} не существует</p>
+        <a href="{% url 'posts:index' %}" class="btn btn-primary">
+          Добро пожаловать через главный вход :)
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 {% endblock %}
