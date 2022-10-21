@@ -18,6 +18,11 @@
     <p class="card-text">
       {{ post.text|linebreaks|truncatewords:50 }}
     </p>
+    {% if post.comments.exists %}
+      <p class="card-text text-secondary small">
+        Комментарии: {{ post.comments.count }}
+      </p>
+    {% endif %}
     <a
       class="btn btn-outline-primary btn-sm"
       href="{% url 'posts:post_detail' post.pk %}"
