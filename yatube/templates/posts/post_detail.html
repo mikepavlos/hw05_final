@@ -32,12 +32,12 @@
         </ul>
       </aside>
       <article class="col-12 col-md-9">
-        {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
-          <img class="card-img my-2" src="{{ im.url }}" alt="picture 960x339">
+        {% thumbnail post.image "960x600" crop="center" upscale=True as im %}
+          <img class="card-img my-2" src="{{ im.url }}" alt="picture 960x600">
         {% endthumbnail %}
-        <p>{{ post.text }}</p>
+        <p>{{ post.text|linebreaks }}</p>
         {% if post.author_id == user.id %}
-        <a class="btn btn-primary" href="{% url 'posts:post_edit' post.pk %}">
+        <a class="btn btn-primary btn-sm" href="{% url 'posts:post_edit' post.pk %}">
           редактировать запись
         </a>
         {% endif %}

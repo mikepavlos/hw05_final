@@ -1,0 +1,6 @@
+<div class="media-body small">
+  <a href="{% url 'posts:profile' comment.author.username %}">
+    {{ comment.author.username }}
+  </a>
+  {{ comment.text|linebreaks }}
+</div>

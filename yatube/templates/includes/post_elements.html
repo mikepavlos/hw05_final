@@ -12,16 +12,28 @@
     <h6 class="card-title text-secondary">
       Дата публикации: {{ post.pub_date|date:"d E Y" }}
     </h6>
-    {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
+    {% thumbnail post.image "960x600" crop="center" upscale=True as im %}
       <img class="card-img top" src="{{ im.url }}" alt="picture 960x339">
     {% endthumbnail %}
     <p class="card-text">
       {{ post.text|linebreaks|truncatewords:50 }}
     </p>
     {% if post.comments.exists %}
-      <p class="card-text text-secondary small">
-        Комментарии: {{ post.comments.count }}
+      <p>
+        <a class="card-text text-secondary small"
+           data-bs-toggle="collapse"
+           href="#CollapseComments{{ post.id }}"
+           aria-expanded="false"
+           aria-controls="CollapseComments{{ post.id }}"
+        >
+          Комментарии: {{ post.comments.count }}
+        </a>
       </p>
+        <div class="collapse" id="CollapseComments{{ post.id }}">
+          {% for comment in post.comments.all %}
+            {% include 'includes/comments_list.html' %}
+          {% endfor %}
+        </div>
     {% endif %}
     <a
       class="btn btn-outline-primary btn-sm"
