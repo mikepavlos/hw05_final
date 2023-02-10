@@ -1,5 +1,18 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Custom 500{% endblock %}
 {% block content %}
-  <h1>Custom 500</h1>
+  <div class="container py-5">
+    <div class="card text-center bg-dark text-white">
+      <img
+        src="{% static 'pict/RE4wwun.jpg' %}"
+        class="rounded"
+        alt="..."
+      >
+      <div class="card-img-overlay">
+        <h3 class="card-title">Однако!</h3>
+        <p class="card-text">На сервере что-то пошло не так</p>
+      </div>
+    </div>
+  </div>
 {% endblock %}
