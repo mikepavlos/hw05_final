@@ -71,5 +71,5 @@ python manage.py runserver
 
 ### Автор проекта:
 
-Михаил Павлов <pavlovichmihaylovich@yandex.ru>
+Михаил Павлов <pavlovichmihaylovich@yandex.ru>, telegram @miha1is
 
